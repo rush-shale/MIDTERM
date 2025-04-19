@@ -8,5 +8,5 @@ define('DB_NAME', 'login-system');
 // SMTP configuration (Gmail)
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_USER', '20211395@nbsc.edu.ph');       // Gmail address
-define('SMTP_PASS', 'johnrushel123');              // Gmail app password
+define('SMTP_PASS', '262001');              // Gmail app password
 ?>
