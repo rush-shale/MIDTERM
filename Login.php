@@ -1,50 +1,63 @@
 <?php
+require 'config.php'; // DB and email config
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // path to PHPMailer autoload
+require 'vendor/autoload.php';
 
-// Replace this with actual user data from your database
-$validUser = "admin";
-$validPass = "password123";
-
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    if ($username === $validUser && $password === $validPass) {
-        // Send Gmail notification
-        $mail = new PHPMailer(true);
+    // Connect to database
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    if ($conn->connect_error) {
+        die("DB Connection failed: " . $conn->connect_error);
+    }
 
-        try {
-            // Gmail SMTP settings
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'yourgmail@gmail.com'; // replace with sender Gmail
-            $mail->Password   = 'your-app-password';   // use app password (not your Gmail password)
-            $mail->SMTPSecure = 'tls';
-            $mail->Port       = 587;
+    // Check user in database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-            // Email content
-            $mail->setFrom('yourgmail@gmail.com', 'Login Notifier');
-            $mail->addAddress('20211395@nbsc.edu.ph');
-            $mail->Subject = 'New Login Detected';
-            $mail->Body    = "User '$username' has successfully logged in at " . date("Y-m-d H:i:s");
+    if ($user = $result->fetch_assoc()) {
+        if (password_verify($password, $user['password'])) {
+            // Send email on successful login
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host       = SMTP_HOST;
+                $mail->SMTPAuth   = true;
+                $mail->Username   = SMTP_USER;
+                $mail->Password   = SMTP_PASS;
+                $mail->SMTPSecure = 'tls';
+                $mail->Port       = 587;
 
-            $mail->send();
-            echo "Login successful! Notification sent.";
-        } catch (Exception $e) {
-            echo "Login successful, but email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                $mail->setFrom(SMTP_USER, 'Login Notifier');
+                $mail->addAddress('20211395@nbsc.edu.ph');
+                $mail->Subject = 'Login Alert';
+                $mail->Body    = "User '$username' logged in at " . date("Y-m-d H:i:s");
+
+                $mail->send();
+                echo "Login successful. Notification sent!";
+            } catch (Exception $e) {
+                echo "Login successful, but email failed: {$mail->ErrorInfo}";
+            }
+        } else {
+            echo "Incorrect password.";
         }
     } else {
-        echo "Invalid username or password.";
+        echo "User not found.";
     }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
 
-<!-- Simple Login Form -->
+<!-- HTML form -->
 <form method="post">
   <h2>Login</h2>
   <label>Username:</label>
