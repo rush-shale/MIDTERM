@@ -11,40 +11,11 @@ $user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Dashboard</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #1d3557, #457b9d);
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
-        }
-
-        .dashboard-box {
-            background: #fff;
-            color: #1d3557;
-            max-width: 400px;
-            margin: auto;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        a.logout {
-            display: inline-block;
-            margin-top: 20px;
-            color: #e63946;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        a.logout:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="dashboard.css"> <!-- Link to external CSS -->
 </head>
 <body>
     <div class="dashboard-box">
