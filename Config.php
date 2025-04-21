@@ -1,12 +1,11 @@
 <?php
-// Database configuration
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'login-system');
+define('DB_NAME', 'rr');
 
-// SMTP configuration (Gmail)
 define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_USER', '20211395@nbsc.edu.ph');       // Gmail address
-define('SMTP_PASS', '262001');              // Gmail app password
+define('SMTP_USER', '20211395@nbsc.edu.ph');
+define('SMTP_PASS', 'your_app_password'); // App Password from Gmail
+define('SMTP_PORT', 587);
 ?>

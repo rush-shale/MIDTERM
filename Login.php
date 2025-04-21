@@ -2,8 +2,8 @@
 require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['rush-shale'];
-    $password = $_POST['262001'];
+    $username = $_POST['username'];  // Corrected
+    $password = $_POST['password'];  // Corrected
 
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     if ($conn->connect_error) {
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['password'])) {
             if ($user['verified'] == 1) {
                 echo "Login successful!";
-                // Redirect to dashboard or other page
+                // You can redirect with: header('Location: dashboard.php'); exit;
             } else {
                 echo "Your email is not verified. Please check your inbox.";
             }
