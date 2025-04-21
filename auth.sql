@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 03:21 PM
+-- Generation Time: Apr 21, 2025 at 11:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `login-system`
+-- Database: `auth`
 --
 
 -- --------------------------------------------------------
@@ -29,19 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `verified` tinyint(1) DEFAULT 0,
+  `username` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `verify_token` varchar(100) DEFAULT NULL,
+  `verified` tinyint(4) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `created_at`) VALUES
-(1, 'admin', '$2y$10$gl9qujOKfhnjUs6wAYa94O8raaz8QtqUbHH.qzZ/3ZJHRVu8inEdq', 'admin@example.com', 1, '2025-04-19 13:21:12');
 
 --
 -- Indexes for dumped tables
@@ -52,7 +46,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `verified`, `created
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -63,7 +56,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
