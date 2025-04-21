@@ -1,44 +1,28 @@
 <?php
 require 'config.php';
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];  // Corrected
-    $password = $_POST['password'];  // Corrected
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($user = $result->fetch_assoc()) {
         if (password_verify($password, $user['password'])) {
             if ($user['verified'] == 1) {
                 echo "Login successful!";
-                // You can redirect with: header('Location: dashboard.php'); exit;
             } else {
-                echo "Your email is not verified. Please check your inbox.";
+                echo "Please verify your email.";
             }
         } else {
-            echo "Incorrect password.";
+            echo "Wrong password.";
         }
     } else {
         echo "User not found.";
     }
-    $stmt->close();
-    $conn->close();
 }
 ?>
-
-<form method="post">
-    <h2>Login</h2>
-    <label>Username:</label>
-    <input type="text" name="username" required><br><br>
-    <label>Password:</label>
-    <input type="password" name="password" required><br><br>
-    <button type="submit">Login</button>
-</form>
