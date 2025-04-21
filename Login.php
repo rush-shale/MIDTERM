@@ -1,5 +1,7 @@
 <?php
 require 'config.php';
+session_start();
+
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user = $result->fetch_assoc()) {
         if (password_verify($password, $user['password'])) {
             if ($user['verified'] == 1) {
-                echo "Login successful!";
+                $_SESSION['user'] = $user;
+                header("Location: dashboard.php");
+                exit();
             } else {
                 echo "Please verify your email.";
             }
