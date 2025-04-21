@@ -1,43 +1,49 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background: linear-gradient(135deg, #1d3557, #457b9d);
-    color: #fff;
-    margin: 0;
+    margin:0;
     padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
-  }
-  
-  .modal {
-    background: #f1f1f1;
+    align-items: center;
+    height: 50vh;
+}
+
+.login-box {
+    background: #fff;
     color: #333;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    width: 350px;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
     text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    font-weight: bold;
+}
+
+.login-box h2 {
+    margin-bottom: 25px;
     color: #1d3557;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
+    font-size: 26px;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
     width: 90%;
     padding: 12px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-sizing: border-box;
-  }
-  
-  button {
+    transition: border-color 0.3s ease;
+}
+
+.login-box input[type="text"]:focus,
+.login-box input[type="password"]:focus {
+    border-color: #457b9d;
+    outline: none;
+}
+
+.login-box button {
     width: 95%;
     padding: 12px;
     background-color: #1d3557;
@@ -47,19 +53,59 @@ body {
     font-size: 16px;
     cursor: pointer;
     margin-top: 15px;
-  }
-  
-  button:hover {
+    transition: background 0.3s ease;
+}
+
+.login-box button:hover {
     background-color: #457b9d;
-  }
-  
-  a {
+}
+
+.login-box .register-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-box .register-link a {
     color: #1d3557;
     text-decoration: none;
     font-weight: bold;
-  }
-  
-  a:hover {
+}
+
+.login-box .register-link a:hover {
     text-decoration: underline;
-  }
-  
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+.input-container {
+    position: relative;
+    width: 90%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 480px) {
+    .login-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-box h2 {
+        font-size: 22px;
+    }
+
+    .login-box button {
+        font-size: 14px;
+    }
+}
